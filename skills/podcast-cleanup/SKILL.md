@@ -80,12 +80,14 @@ Call `import_fcp_xml` with `filePath` = the `-cleaned.xml`. A new sequence named
 `<name> - cleaned` appears. Premiere may also add a second copy of each media clip in the Project
 panel; that is normal for XML imports and harmless.
 
-### 6. Put the markers back
-Premiere drops markers on XML import, so add them yourself from `<name>-cleaned-edits.json`
-→ `markers_for_new_sequence` (each has `time_seconds`, `name`, `comment`):
-1. `set_active_sequence` to the NEW sequence first. (`add_marker` always writes to the ACTIVE
-   sequence, whatever id you pass, and markers cannot be deleted through the MCP.)
-2. Call `add_marker` once per marker, one call at a time.
+### 6. Check the markers
+The cleaned XML carries one marker per "um" left in (`<name>-cleaned-edits.json` →
+`markers_for_new_sequence`). Current Premiere keeps them on import, but some versions and import
+paths drop them, and markers **cannot be deleted through the MCP**, so check before adding:
+1. `set_active_sequence` to the NEW sequence. (`add_marker` and `list_markers` act on the ACTIVE
+   sequence, whatever id you pass.)
+2. `list_markers`. If every marker from the JSON is there (same times), you're done.
+3. Only for the missing ones: `add_marker` with `time_seconds`, `name`, `comment`, one call at a time.
 
 ### 7. Hand it over
 Open the report (`<name>-cleaned-report.html`) for the user. Tell them:

@@ -112,6 +112,13 @@ docs/TROUBLESHOOTING.md
 tests/                 a fake two-mic podcast + 13 tests: python3 -m unittest discover tests
 ```
 
+## Tested
+
+- 13 automated tests on a fake two-mic podcast (every case: pause, clean um, glued um, untranscribed laugh).
+- A real 36-minute, six-file recording: 6m18s of dead air removed in about 4 seconds; the cleaned XML
+  imported into Premiere Pro 2026 and re-exported with all 142 clips per track at exactly the
+  authored positions, A/V links and markers intact.
+
 ## Credits
 
 - Premiere control: [Adobe Premiere Pro MCP](https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP) by Het Patel.
