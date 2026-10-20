@@ -123,5 +123,14 @@ class DemoPodcast(unittest.TestCase):
             podcast_clean.main(["--xml", self.xml, "--transcript", bad, "--out", os.path.join(self.dir, "bad.xml")])
 
 
+class Paths(unittest.TestCase):
+    def test_media_paths_from_premiere_xml(self):
+        f = podcast_clean.path_from_url
+        self.assertEqual(f("file://localhost/Volumes/Media/ep%2001.wav"), "/Volumes/Media/ep 01.wav")
+        self.assertEqual(f("file://localhost/C%3a/Users/Joe/Podcast/ep1.wav"), "C:/Users/Joe/Podcast/ep1.wav")
+        self.assertEqual(f("file:///D:/Podcast/cam%20a.mp4"), "D:/Podcast/cam a.mp4")
+        self.assertEqual(f("file://NAS/share/ep1.wav"), "//NAS/share/ep1.wav")
+
+
 if __name__ == "__main__":
     unittest.main()

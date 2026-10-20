@@ -23,9 +23,14 @@ so the worst case is always "delete the new sequence and nothing happened".
    walk the user through: `Window > Extensions > MCP Bridge (CEP)` → temp directory
    `/tmp/premiere-mcp-bridge` → **Save Configuration** → **Start Bridge**. (Full setup is in the
    repo's `docs/SETUP.md`.)
-2. **ffmpeg and Python 3 exist.** Run `ffmpeg -version` and `python3 --version` (on Windows,
-   `python --version`). If ffmpeg is missing: Mac `brew install ffmpeg`, Windows `winget install ffmpeg`.
-3. **A work folder.** Default `~/Podcast-Cleanup/<sequence name>/`. Every file of the run goes there.
+2. **ffmpeg and Python 3 exist.** Mac: `ffmpeg -version`, `python3 --version`. Windows (PowerShell):
+   `ffmpeg -version`, then `py --version` (or `python --version`); use whichever works as the Python
+   command below. Missing: Mac `brew install ffmpeg`; Windows `winget install Gyan.FFmpeg` /
+   `winget install Python.Python.3.12`, then a NEW terminal.
+3. **A work folder.** Default `~/Podcast-Cleanup/<sequence name>/` (Windows:
+   `%USERPROFILE%\Podcast-Cleanup\<sequence name>\`). Every file of the run goes there.
+4. **Windows only:** the bridge temp folder must be a Windows path (e.g. `C:\Temp\premiere-mcp-bridge`)
+   and identical in the panel and in the MCP's `PREMIERE_TEMP_DIR`; the panel blanks out `/tmp` paths.
 
 ## The run
 
@@ -60,6 +65,9 @@ If the tool fails, ask the user: `File > Export > Final Cut Pro XML...` with the
 python3 "<this skill folder>/scripts/podcast_clean.py" \
   --xml "<work>/<name>.xml" --transcript "<work>/<name>.json"
 ```
+On Windows: `py "<this skill folder>\scripts\podcast_clean.py" --xml "<work>\<name>.xml" --transcript "<work>\<name>.json"`
+(`python` if `py` isn't there). Quote every path; podcast folders often have spaces.
+
 It reads the audio straight from the media files the XML points to. If it warns that media files
 were not found (footage on a drive that is not mounted, or the edit lives on another machine), ask
 the user for a mixdown instead: `File > Export > Media`, format **Waveform Audio**, range **Entire
@@ -90,7 +98,7 @@ paths drop them, and markers **cannot be deleted through the MCP**, so check bef
 3. Only for the missing ones: `add_marker` with `time_seconds`, `name`, `comment`, one call at a time.
 
 ### 7. Hand it over
-Open the report (`<name>-cleaned-report.html`) for the user. Tell them:
+Open the report (`<name>-cleaned-report.html`) for the user (Mac `open`, Windows `start`). Tell them:
 - the numbers, and that the original sequence is untouched;
 - to play three or four of the edits listed in the report (the **New** column is the timecode on
   the cleaned sequence) to confirm the rhythm feels natural;

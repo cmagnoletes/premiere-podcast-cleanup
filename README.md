@@ -28,9 +28,10 @@ Your original sequence is never touched. If you don't like the result, delete th
 | Claude Code | [claude.com/claude-code](https://claude.com/claude-code) |
 | Node.js 18+ | for the Premiere MCP |
 | Python 3.9+ | Mac has it; Windows: `winget install Python.Python.3.12` |
-| ffmpeg | Mac: `brew install ffmpeg` · Windows: `winget install ffmpeg` |
+| ffmpeg | Mac: `brew install ffmpeg` · Windows: `winget install Gyan.FFmpeg` |
 
-Mac is the tested path. Windows notes are in [docs/SETUP.md](docs/SETUP.md#windows).
+Mac is the tested path. **On Windows:** use `install.ps1` instead of `install.sh`, `py` instead of `python3`, and a
+Windows temp folder for the MCP bridge (it ignores `/tmp`). Full steps: [docs/SETUP.md → Windows](docs/SETUP.md#windows).
 
 ## Set it up (once, ~15 minutes)
 
@@ -41,6 +42,7 @@ Mac is the tested path. Windows notes are in [docs/SETUP.md](docs/SETUP.md#windo
    cd premiere-podcast-cleanup
    ./install.sh
    ```
+   Windows: `powershell -ExecutionPolicy Bypass -File .\install.ps1`
 3. **Try it on the demo** (no Premiere needed, 10 seconds):
    ```bash
    python3 tests/make_fixture.py ~/Desktop/cleanup-demo

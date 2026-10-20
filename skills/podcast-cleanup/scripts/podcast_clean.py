@@ -103,10 +103,14 @@ def path_from_url(url):
     if not url:
         return None
     if url.startswith("file:"):
-        p = unquote(urlparse(url).path)
-        # file://localhost/Volumes/... and Windows file:///C:/...
+        u = urlparse(url)
+        p = unquote(u.path)
+        # Mac: file://localhost/Volumes/...   Windows: file://localhost/C%3a/Users/...
         if re.match(r"^/[A-Za-z]:/", p):
-            p = p[1:]
+            return p[1:]
+        # Windows network share: file://server/share/... -> //server/share/...
+        if u.netloc and u.netloc.lower() != "localhost":
+            return "//" + u.netloc + p
         return p
     return unquote(url)
 
